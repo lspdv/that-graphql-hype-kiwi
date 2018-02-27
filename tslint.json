@@ -1,0 +1,22 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:react"
+    ],
+    "jsRules": {
+
+    },
+    "rules": {
+      "interface-name": [true, "never-prefix"], // following the TypeScript official code style
+      "interface-over-type-literal": false, // this is because in TSX I want types over interfaces
+      "member-access": [true, "no-public"],
+      "quotemark": [true, "single", "jsx-double"], // enforce single quotes
+      "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
+      "max-line-length": [true, 150],
+      "no-console": [ false ],
+      "no-empty-interface": false,
+      "object-literal-sort-keys": false,
+      "indent": [true, "spaces", 2]
+    },
+    "rulesDirectory": []
+}
