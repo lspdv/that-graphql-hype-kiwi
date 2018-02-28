@@ -62,6 +62,7 @@ export function getFlights(from, to, date) {
 export function getLocations() {
   return client.query({
     query: gql`
+    query Locations {
       allLocations(options: { locationType: city }) {
         edges {
           node {

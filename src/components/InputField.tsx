@@ -28,6 +28,7 @@ export class InputField extends React.Component<{}, any> {
   }
 
   handleFrom(event) {
+    console.log(event.target.value, 'value');
     this.setState({
         from: event.target.value
       });
@@ -60,18 +61,12 @@ export class InputField extends React.Component<{}, any> {
                   value={this.state.from}
                   onChange={this.handleFrom}
                   floatingLabelText={'From: '}>
-                  {/* {this.props.allDestinations.edges.map(function(destination) {
-                    return <MenuItem value={destination.node.name} primaryText={ destination.node.name }/>;
-                  })} */}
                 </TextField>
               </AutoCompleteFilter>
               <TextField
                 value={this.state.to}
                 onChange={this.handleTo}
                 floatingLabelText={'To: '}>
-                {/* {this.props.allDestinations.edges.map(function(destination) {
-                  return <MenuItem value={destination.node.name} primaryText={ destination.node.name }/>;
-                })} */}
               </TextField>
               <DatePicker onChange={this.handleDate} value ={this.state.date} hintText="Choose date" />
             </form>

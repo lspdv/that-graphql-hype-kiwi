@@ -3,9 +3,9 @@ import * as React from 'react';
 import AutoComplete from 'material-ui/AutoComplete';
 import {  getLocations } from '../api/graphql';
 
-type FlightsShape = {edges: any[]};
+type FlightsShape = { edges: any[] };
 
-export class AutoCompleteFilter extends React.Component<{}, {data: {allLocations?: FlightsShape }}> {
+export class AutoCompleteFilter extends React.Component<{}, {data: { allLocations?: FlightsShape }}> {
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -32,16 +32,15 @@ render() {
           {data
             && data.allLocations
             && data.allLocations.edges
-            && data.allLocations.edges.map((locations, idx) =>
-              <AutoComplete {...locations} key={idx}
-                //   floatingLabelText=""
-                filter={AutoComplete.fuzzyFilter}
-                dataSource={locations}
-                maxSearchResults={10}
-              />
-            )
+            &&
+            <AutoComplete
+              floatingLabelText="From:"
+              filter={AutoComplete.fuzzyFilter}
+              dataSource= {data.allLocations.edges}
+              maxSearchResults={10}
+            />
           }
-        </div>
+      </div>
       );
     }
   }
