@@ -58,3 +58,18 @@ export function getFlights(from, to, date) {
   `
   });
 }
+
+export function getLocations(query) {
+  return client.query({
+    query: gql`
+      allLocations(search: "${query}", options: { locationType: city }) {
+        edges {
+          node {
+            name
+          }
+        }
+      }
+    }
+    `
+  });
+}
