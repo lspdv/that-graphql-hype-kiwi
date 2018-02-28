@@ -59,10 +59,10 @@ export function getFlights(from, to, date) {
   });
 }
 
-export function getLocations(query) {
+export function getLocations() {
   return client.query({
     query: gql`
-      allLocations(search: "${query}", options: { locationType: city }) {
+      allLocations(options: { locationType: city }) {
         edges {
           node {
             name

@@ -1,8 +1,10 @@
 import * as React from 'react';
 
 import { getFlights } from '../api/graphql';
+import { AutoCompleteFilter } from './AutoComplete';
 
 import DatePicker from 'material-ui/DatePicker';
+// import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
@@ -23,13 +25,6 @@ export class InputField extends React.Component<{}, any> {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDate = this.handleDate.bind(this);
     this.handleTo = this.handleTo.bind(this);
-    this.getErrorMessage = this.getErrorMessage.bind(this);
-  }
-
-  getErrorMessage(value: string) {
-    return value.length > 0
-      ? ''
-      : `Field can't be empty.`;
   }
 
   handleFrom(event) {
@@ -60,15 +55,16 @@ export class InputField extends React.Component<{}, any> {
       <div className="container">
           <div className="input">
             <form>
-              <TextField
-                value={this.state.from}
-                onChange={this.handleFrom}
-                floatingLabelText={'From: '}>
-                {/* {this.props.allDestinations.edges.map(function(destination) {
-                  return <MenuItem value={destination.node.name} primaryText={ destination.node.name }/>;
-                })} */}
-              </TextField>
-
+              <AutoCompleteFilter>
+                <TextField
+                  value={this.state.from}
+                  onChange={this.handleFrom}
+                  floatingLabelText={'From: '}>
+                  {/* {this.props.allDestinations.edges.map(function(destination) {
+                    return <MenuItem value={destination.node.name} primaryText={ destination.node.name }/>;
+                  })} */}
+                </TextField>
+              </AutoCompleteFilter>
               <TextField
                 value={this.state.to}
                 onChange={this.handleTo}
@@ -78,14 +74,13 @@ export class InputField extends React.Component<{}, any> {
                 })} */}
               </TextField>
               <DatePicker onChange={this.handleDate} value ={this.state.date} hintText="Choose date" />
-
             </form>
-        <RaisedButton
-          onClick={this.handleSubmit}
-          label="Search"
-        />
-      </div>
-      </div>
-    );
+            <RaisedButton
+              onClick={this.handleSubmit}
+              label="Search"
+            />
+          </div>
+        </div>
+      );
+    }
   }
-}
