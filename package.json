@@ -28,7 +28,7 @@
     "apollo-client": "^2.2.5",
     "apollo-link-http": "^1.5.1",
     "graphql": "^0.12.0",
-    "graphql-tag": "^2.8.0", 
+    "graphql-tag": "^2.8.0",
     "office-ui-fabric-react": "^5.55.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -40,8 +40,8 @@
     "@types/node": "^9.4.6",
     "@types/react": "^16.0.38",
     "@types/react-dom": "^16.0.4",
-    "typescript": "^2.7.2",
     "lint-staged": "^7.0.0",
-    "pre-commit": "^1.2.2"
+    "pre-commit": "^1.2.2",
+    "typescript": "^2.7.2"
   }
 }

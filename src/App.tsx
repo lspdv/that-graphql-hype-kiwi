@@ -1,19 +1,18 @@
 import * as React from 'react';
 
-export type AppProps = {
-  };
- 
+import { InputField } from './components/InputField';
 
 export default class App extends React.Component<{}, {}> {
-  constructor(props: AppProps) {
+  constructor(props: {}) {
     super(props);
-    this.state = { //
-    };
-  }
 
-  render() {
+    }
+
+render() {
     return (
-        <div/>
+        <div>
+          <InputField />
+        </div>
       );
     }
   }
