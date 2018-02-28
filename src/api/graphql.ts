@@ -8,11 +8,11 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-export function getFlights(from, to) {
+export function getFlights(from, to, date) {
   return client.query({
     query: gql`
       query Flights {
-      allFlights(search: {from: {location: "${from}"}, to: {location: ${to}}, date: {exact: "2018-03-25"}}) {
+      allFlights(search: {from: {location: "${from}"}, to: {location: ${to}}, date: {exact: ${date}}}}) {
         edges {
           node {
             id

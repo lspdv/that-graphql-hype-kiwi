@@ -10,7 +10,8 @@ type FlightsShape = {edges: any[]};
 
 type SearchProps = {
   from: string,
-  to: string
+  to: string,
+  date: string
 };
 
 export class SearchButton extends React.Component<(SearchProps & IButtonProps), {data: {allFlights?: FlightsShape; }}> {
@@ -28,9 +29,9 @@ export class SearchButton extends React.Component<(SearchProps & IButtonProps), 
   }
 
   handleSubmit() {
-    const {from, to}: SearchProps = this.props;
+    const {from, to, date}: SearchProps = this.props;
     {console.log(from, to, 'state'); }
-    getFlights(from, to).then((result) => {
+    getFlights(from, to, date).then((result) => {
       this.setState({data: result.data});
       const {data} = this.state;
       console.log(`Fetched data: ${ data && data.allFlights && data.allFlights.edges && data.allFlights.edges.length} flights`);

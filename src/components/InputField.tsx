@@ -1,8 +1,10 @@
 import * as React from 'react';
 
-import { TextField } from 'office-ui-fabric-react/lib/TextField';
-import { DateCalendarPicker } from './DateCalendarPicker';
-import { SearchButton } from './SearchButton';
+import { getFlights } from '../api/graphql';
+
+import DatePicker from 'material-ui/DatePicker';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 import './global.css';
 
@@ -11,13 +13,17 @@ export class InputField extends React.Component<{}, any> {
     super(props);
 
     this.state = {
-      value: '',
       from: '',
-      to: ''
+      date: null,
+      to: '',
+      value: 1
     };
 
+    this.handleFrom = this.handleFrom.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDate = this.handleDate.bind(this);
+    this.handleTo = this.handleTo.bind(this);
     this.getErrorMessage = this.getErrorMessage.bind(this);
-    this.handleOnChange = this.handleOnChange.bind(this);
   }
 
   getErrorMessage(value: string) {
@@ -26,59 +32,59 @@ export class InputField extends React.Component<{}, any> {
       : `Field can't be empty.`;
   }
 
-//   handleOnChange(event): void {
-//     const target = event.target;
-//     this.setState({[event.target.label]: target.value});
-//     {console.log(target.label, target.value, 'setstate target'); }
-//     {console.log(this.state.from, this.state.to, 'setstate FORM'); }
-// }
+  handleFrom(event) {
+    this.setState({
+        from: event.target.value
+      });
+    }
 
-handleOnChange({target}) {
-  console.log(target, 'target');
-  const value = target.value;
-  const name = target.label === 'from' ? 'from' : 'to';
+  handleTo(event, to) {
+    this.setState({to});
+  }
+  handleDate(event, date) {
+    this.setState({date});
+  }
 
-  this.setState({
-    [name]: value
-  });
-}
+  handleSubmit() {
+    const {from, to, date} = this.state;
+    {console.log(from, to, date, 'state'); }
+    getFlights(from, to, date).then((result) => {
+      this.setState({data: result.data});
+      const {data} = this.state;
+      console.log(`Fetched data: ${ data && data.allFlights && data.allFlights.edges && data.allFlights.edges.length} flights`);
+    });
+  }
 
   render() {
     return (
-      <div>
-        <div className="input">
-          <div className="field">
-            <TextField
-              label="from"
-              underlined
-              required={true}
-              onGetErrorMessage={this.getErrorMessage}
-              validateOnLoad={false}
-              validateOnFocusOut
-              value={this.state.from}
-              onChanged={this.handleOnChange}
-            />
-            </div>
-          <div className="field">
-          <TextField
-            label="to"
-            underlined
-            required={true}
-            onGetErrorMessage={this.getErrorMessage}
-            validateOnLoad={false}
-            validateOnFocusOut
-            value={this.state.to}
-            onChanged={this.handleOnChange}
-          />
-          </div>
-          <div className="field">
-          <DateCalendarPicker
-          />
-          </div>
-        </div>
-        <div className="search-button">
-          <SearchButton from={this.state.from} to={this.state.to}/>
-        </div>
+      <div className="container">
+          <div className="input">
+            <form>
+              <TextField
+                value={this.state.from}
+                onChange={this.handleFrom}
+                floatingLabelText={'From: '}>
+                {/* {this.props.allDestinations.edges.map(function(destination) {
+                  return <MenuItem value={destination.node.name} primaryText={ destination.node.name }/>;
+                })} */}
+              </TextField>
+
+              <TextField
+                value={this.state.to}
+                onChange={this.handleTo}
+                floatingLabelText={'To: '}>
+                {/* {this.props.allDestinations.edges.map(function(destination) {
+                  return <MenuItem value={destination.node.name} primaryText={ destination.node.name }/>;
+                })} */}
+              </TextField>
+              <DatePicker onChange={this.handleDate} value ={this.state.date} hintText="Choose date" />
+
+            </form>
+        <RaisedButton
+          onClick={this.handleSubmit}
+          label="Search"
+        />
+      </div>
       </div>
     );
   }
