@@ -2,6 +2,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import gql from 'graphql-tag';
+import * as moment from 'moment';
 
 const client = new ApolloClient({
   link: new HttpLink({ uri: 'https://graphql.kiwi.com/' }),
@@ -9,10 +10,16 @@ const client = new ApolloClient({
 });
 
 export function getFlights(from, to, date) {
+  const localDate = moment(date).format('YYYY-MM-DD').toString();
   return client.query({
     query: gql`
-      query Flights {
-      allFlights(search: {from: {location: "${from}"}, to: {location: ${to}}, date: {exact: ${date}}}}) {
+      query Flights($locationFrom: String!, $locationTo: String!, $date: Date! ) {
+      allFlights(search: {
+        from: { location: $locationFrom },
+        to: { location: $locationTo },
+        date: { exact: $date}
+        }
+        ) {
         edges {
           node {
             id
@@ -55,7 +62,7 @@ export function getFlights(from, to, date) {
         }
       }
     }
-  `
+  `, variables: { locationFrom: from, locationTo: to, date: localDate }
   });
 }
 

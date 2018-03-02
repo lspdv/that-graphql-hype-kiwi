@@ -3,7 +3,7 @@ import * as React from 'react';
 import { darkBlack, darkWhite, fullBlack, tealA700 } from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { InputField } from './components/InputField';
+import { SearchForm } from './components/SearchForm';
 
 const muiTheme = getMuiTheme({
   fontFamily: 'Roboto, sans-serif',
@@ -31,7 +31,7 @@ render() {
     return (
         <div>
           <MuiThemeProvider muiTheme={muiTheme}>
-            <InputField />
+            <SearchForm />
           </MuiThemeProvider>
         </div>
       );
