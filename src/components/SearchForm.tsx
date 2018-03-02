@@ -2,11 +2,14 @@ import * as React from 'react';
 
 import { getFlights, getLocations } from '../api/graphql';
 import { FlightsCard } from './FlightsCard';
+// import { ProgressBar } from './ProgressBar';
 import { Search } from './Search';
 
 import './global.css';
+import { ProgressBar } from './ProgressBar';
 
 type State = {
+  loading: boolean,
   dataSource: any,
   data: {allFlights?: LocationsShape},
   newFormValues: {
@@ -23,6 +26,7 @@ export class SearchForm extends React.Component<{}, State> {
     super(props);
 
     this.state = {
+      loading: false,
       dataSource: {
         allLocations: {
           edges: []
@@ -48,22 +52,21 @@ export class SearchForm extends React.Component<{}, State> {
   componentDidMount() {
     getLocations().then((result) => {
         this.setState({dataSource: result.data});
-        const {dataSource} = this.state;
-        console.log(`Found ${ dataSource
-          && dataSource.allLocations && dataSource.allLocations.edges && dataSource.allLocations.edges.length} locations`);
       });
     }
 
   handleSubmit() {
     const { from, to, date } = this.state.newFormValues;
+    this.setState({ loading: true });
     getFlights(from, to, date).then((result) => {
-      this.setState({data: result.data});
+      this.setState({ data: result.data, loading: false });
       const {data} = this.state;
       console.log(`Fetched data: found ${ data && data.allFlights && data.allFlights.edges && data.allFlights.edges.length} flights`);
-    });
+      }
+    );
   }
 
-  handleOnChange(name: string, value: string) {
+handleOnChange(name: string, value: string) {
     const values = this.state.newFormValues;
     values[name] = value;
 
@@ -78,9 +81,8 @@ export class SearchForm extends React.Component<{}, State> {
     this.setState({ newFormValues: values});
   }
 
-  render() {
-    const { dataSource, data } = this.state;
-
+render() {
+    const { dataSource, data, loading } = this.state;
     return (
       <div>
         <Search
@@ -89,7 +91,10 @@ export class SearchForm extends React.Component<{}, State> {
           handleOnChange={this.handleOnChange}
           handleSubmit={this.handleSubmit}
         />
-        {data && data.allFlights && data.allFlights.edges && data.allFlights.edges.map((flight, idx) => <FlightsCard {...flight} key={idx} />)}
+        {loading && <ProgressBar />}
+        {data && data.allFlights
+          && data.allFlights.edges &&
+          data.allFlights.edges.map((flight, idx) => <FlightsCard {...flight} key={idx} />)}
       </div>
     );
   }

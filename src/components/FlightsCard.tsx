@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { darkBlack, darkWhite, fullBlack, tealA700 } from 'material-ui/styles/colors';
+import { darkBlack, darkWhite, fullBlack } from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import * as moment from 'moment';
@@ -8,20 +8,11 @@ import * as moment from 'moment';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 
 const muiThemeFlightCard = getMuiTheme({
-  fontFamily: 'Roboto, sans-serif',
   palette: {
     textColor: darkBlack,
     shadowColor: fullBlack,
-    primary1Color: darkWhite,
-    primary2Color: tealA700,
-    primary3Color: tealA700,
-    accent1Color: darkWhite,
-    accent2Color: tealA700,
-    accent3Color: tealA700,
-    alternateTextColor: darkWhite,
     canvasColor: darkWhite,
-    borderColor: fullBlack,
-    pickerHeaderColor: tealA700
+    borderColor: fullBlack
   }
 });
 
@@ -37,6 +28,12 @@ export type FlightsProps = {
     },
     legs: [
       {
+        airline: {
+        name: string,
+        code: string,
+        logoUrl: string,
+        isLowCost: string
+      },
         flightNumber: number,
         departure: {
           airport: {
@@ -74,6 +71,22 @@ const FlightDuration = ({ flight }) => {
   return <span>{Math.floor(duration.asHours())}h {duration.minutes()}m</span>;
 };
 
+const Description = ({ airline, departure, arrival}) => {
+  return (
+    <div>
+      <div>
+        <img src={airline.logoUrl} title={airline.name} />
+      </div>
+      <div>
+        {departure.airport.name}
+      </div>
+      <div>
+        {arrival.airport.name}
+      </div>
+    </div>
+  );
+};
+
 export const FlightsCard = (flight: FlightsProps) =>
   <MuiThemeProvider muiTheme={muiThemeFlightCard}>
     <div className="flights-card-container">
@@ -92,7 +105,12 @@ export const FlightsCard = (flight: FlightsProps) =>
           </div>
           <div className="flights-card-details">
             <CardText>
+            {flight.node.legs.map((leg, idx) => <Description key={idx} {...leg} />)}
             </CardText>
+          </div>
+          <div>
+          { flight.node.price.amount }
+          { flight.node.price.currency }
           </div>
         </div>
       </Card>

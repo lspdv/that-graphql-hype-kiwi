@@ -32,6 +32,12 @@ export function getFlights(from, to, date) {
               localTime
             }
             legs {
+              airline {
+                name
+                code
+                logoUrl
+                isLowCost
+              }
               flightNumber
               departure {
                 airport {
