@@ -1,4 +1,8 @@
-This project was bootstrapped with Create React App, React and Typescript.
+This project was bootstrapped with Create React App, React and Typescript and Material UI.
+
+This is experimental repo to try GraphQL and maybe by that fly to js-weekend by Kiwi.com
+
+If you like this, don't forget to Star this repo. It will make me feel good.
 
 In the project directory, you can run:
 
@@ -16,5 +20,3 @@ Launches the test runner in the interactive watch mode.<br>
 `yarn build`
 
 Builds the app for production to the `build` folder.<br>
-
-More info soon.
