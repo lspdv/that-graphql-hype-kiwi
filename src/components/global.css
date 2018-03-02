@@ -18,3 +18,22 @@
   align-items: center;
   margin-top: 20px;
 }
+
+.flights-card-container {
+  max-width: 70%;
+  margin: auto;
+  margin-top: 10em;
+}
+
+.flights-card-boxes {
+  display: flex;
+  flex-direction: row;
+}
+
+.flights-card-times {
+  display: flex;
+}
+
+.flights-card-details {
+  min-width: 200px;
+}

@@ -1,17 +1,10 @@
 import * as React from 'react';
 
-import AutoComplete from 'material-ui/AutoComplete';
 import { getFlights, getLocations } from '../api/graphql';
-
-import DatePicker from 'material-ui/DatePicker';
-import RaisedButton from 'material-ui/RaisedButton';
+import { FlightsCard } from './FlightsCard';
+import { Search } from './Search';
 
 import './global.css';
-
-const formFields = [
-  { title: 'From:', stateName: 'from' },
-  { title: 'To:', stateName: 'to'}
-];
 
 type State = {
   dataSource: any,
@@ -56,7 +49,7 @@ export class SearchForm extends React.Component<{}, State> {
     getLocations().then((result) => {
         this.setState({dataSource: result.data});
         const {dataSource} = this.state;
-        console.log(`Fetched data: ${ dataSource
+        console.log(`Found ${ dataSource
           && dataSource.allLocations && dataSource.allLocations.edges && dataSource.allLocations.edges.length} locations`);
       });
     }
@@ -66,8 +59,7 @@ export class SearchForm extends React.Component<{}, State> {
     getFlights(from, to, date).then((result) => {
       this.setState({data: result.data});
       const {data} = this.state;
-      console.log(`Fetched data: ${ data && data.allFlights && data.allFlights.edges && data.allFlights.edges.length} flights`);
-      console.log(`${ data && data.allFlights && data.allFlights.edges && data.allFlights.edges} debug`);
+      console.log(`Fetched data: found ${ data && data.allFlights && data.allFlights.edges && data.allFlights.edges.length} flights`);
     });
   }
 
@@ -87,39 +79,18 @@ export class SearchForm extends React.Component<{}, State> {
   }
 
   render() {
-    const {dataSource} = this.state;
-    const dataSourceShortcut = dataSource
-      && dataSource.allLocations
-      && dataSource.allLocations.edges;
+    const { dataSource, data } = this.state;
 
     return (
-      <div className="container">
-          <div className="input">
-            <form>
-            { dataSourceShortcut
-            && formFields.map((field, idx) =>
-              <AutoComplete
-                key={idx}
-                onUpdateInput={(value: string) => this.handleOnChange(`${field.stateName}`, value)}
-                floatingLabelText={field.title}
-                filter={AutoComplete.fuzzyFilter}
-                dataSource= {dataSourceShortcut && dataSource.allLocations.edges.map((location) => location.name)}
-                maxSearchResults={10}
-                name={field.stateName}
-              />)
-            }
-              <DatePicker
-                onChange={this.handleDate}
-                hintText="Choose date"
-                mode="landscape"
-              />
-            </form>
-            <RaisedButton
-              onClick={this.handleSubmit}
-              label="Search"
-            />
-          </div>
-        </div>
-      );
-    }
+      <div>
+        <Search
+          dataSource={dataSource}
+          handleDate={this.handleDate}
+          handleOnChange={this.handleOnChange}
+          handleSubmit={this.handleSubmit}
+        />
+        {data && data.allFlights && data.allFlights.edges && data.allFlights.edges.map((flight, idx) => <FlightsCard {...flight} key={idx} />)}
+      </div>
+    );
   }
+}

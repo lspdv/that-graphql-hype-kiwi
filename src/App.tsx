@@ -28,7 +28,7 @@ export default class App extends React.Component<{}, {}> {
     }
 
 render() {
-    return (
+  return (
         <div>
           <MuiThemeProvider muiTheme={muiTheme}>
             <SearchForm />
