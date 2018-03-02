@@ -35,11 +35,11 @@ const muiThemeAutoComplete = getMuiTheme({
 const Heading = ({dataSource}) => {
   return(
     dataSource && dataSource.allLocations.edges.length ?
-      <div>No idea? We found {dataSource
+      <h2>No idea? We found {dataSource
       && dataSource.allLocations
       && dataSource.allLocations.edges
-      && dataSource.allLocations.edges.length} locations where you could travel to.</div>
-      : <div>Where would you like to go?</div>
+      && dataSource.allLocations.edges.length} locations where you could travel to.</h2>
+      : <h1>Where would you like to go?</h1>
   );
 };
 
@@ -76,10 +76,12 @@ export const Search = (props: Props) => {
             mode="landscape"
           />
         </form>
-        <RaisedButton
-          onClick={handleSubmit}
-          label="Search"
-        />
+        <div className="search-button">
+          <RaisedButton
+            onClick={handleSubmit}
+            label="Search"
+          />
+        </div>
       </div>
     </div>
   );

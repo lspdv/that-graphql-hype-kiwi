@@ -6,7 +6,7 @@ import { FlightsCard } from './FlightsCard';
 import { Search } from './Search';
 
 import './global.css';
-import { ProgressBar } from './ProgressBar';
+import { Spinner } from './Spinner';
 
 type State = {
   loading: boolean,
@@ -60,8 +60,6 @@ export class SearchForm extends React.Component<{}, State> {
     this.setState({ loading: true });
     getFlights(from, to, date).then((result) => {
       this.setState({ data: result.data, loading: false });
-      const {data} = this.state;
-      console.log(`Fetched data: found ${ data && data.allFlights && data.allFlights.edges && data.allFlights.edges.length} flights`);
       }
     );
   }
@@ -91,7 +89,7 @@ render() {
           handleOnChange={this.handleOnChange}
           handleSubmit={this.handleSubmit}
         />
-        {loading && <ProgressBar />}
+        {loading && <Spinner />}
         {data && data.allFlights
           && data.allFlights.edges &&
           data.allFlights.edges.map((flight, idx) => <FlightsCard {...flight} key={idx} />)}
