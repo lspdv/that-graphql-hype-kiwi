@@ -18,8 +18,8 @@ type Props = {
 };
 
 const formFields = [
-  { title: 'From:', stateName: 'from' },
-  { title: 'To:', stateName: 'to'}
+  { title: 'From*:', stateName: 'from' },
+  { title: 'To*:', stateName: 'to'}
 ];
 
 const muiThemeAutoComplete = getMuiTheme({
@@ -35,11 +35,27 @@ const muiThemeAutoComplete = getMuiTheme({
 const Heading = ({dataSource}) => {
   return(
     dataSource && dataSource.allLocations.edges.length ?
-      <h2>No idea? We found {dataSource
+      <h2 className="that-ugly-green-title">No idea? We found {dataSource
       && dataSource.allLocations
       && dataSource.allLocations.edges
       && dataSource.allLocations.edges.length} locations where you could travel to.</h2>
       : <h1>Where would you like to go?</h1>
+  );
+};
+
+const SorryProste = () => {
+  return(
+    <p>* All fields in search are required, otherwise you will get just very ugly never ending spinning spinner.
+      #sorryProste time is money</p>
+  );
+};
+
+const GitHubLink = () => {
+  return (
+  <p>
+  **Curious about the source code? Close your eyes and click {''}
+  <a href="https://github.com/lspdv/that-graphql-hype-kiwi" target="_blank" rel="noopener noreferrer"> this link</a>.
+  </p>
   );
 };
 
@@ -54,6 +70,8 @@ export const Search = (props: Props) => {
   return(
     <div className="container">
       <Heading dataSource={dataSource}/>
+      <SorryProste />
+      <GitHubLink />
       <div className="input">
         <form>
         { dataSourceShortcut
@@ -72,7 +90,7 @@ export const Search = (props: Props) => {
         }
           <DatePicker
             onChange={handleDate}
-            hintText="Choose date"
+            hintText="Choose date*"
             mode="landscape"
           />
         </form>

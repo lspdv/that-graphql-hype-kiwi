@@ -1,3 +1,11 @@
+p {
+  font-size: 11px;
+}
+
+.that-ugly-green-title{
+  color: #00BFA5;
+}
+
 .container {
   max-width: 50%;
   margin: auto;
@@ -44,6 +52,11 @@
 .flights-card-description {
   padding-bottom: 10px;
   padding-left: 10px;
+}
+
+.flights-card-description-img {
+  height: 40px;
+  width: 40px;
 }
 
 .flights-card-flex {

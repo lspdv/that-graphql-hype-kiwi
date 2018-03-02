@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Just experimental repo to try work with GraphQL and FabricUI, practice TypeScript and maybe complete Kiwi task",
   "author": "@lspdv",
+  "homepage": "https://lspdv.github.io/that-graphql-hype",
   "license": "MIT",
   "keywords": [
     "graphQL",
@@ -17,6 +18,8 @@
     ]
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
@@ -27,6 +30,7 @@
     "apollo-cache-inmemory": "^1.1.9",
     "apollo-client": "^2.2.5",
     "apollo-link-http": "^1.5.1",
+    "gh-pages": "^1.1.0",
     "graphql": "^0.12.0",
     "graphql-tag": "^2.8.0",
     "material-ui": "^0.20.0",
@@ -38,8 +42,8 @@
   "devDependencies": {
     "@types/graphql": "^0.12.4",
     "@types/jest": "^22.1.3",
-    "@types/moment": "^2.13.0",
     "@types/material-ui": "^0.21.0",
+    "@types/moment": "^2.13.0",
     "@types/node": "^9.4.6",
     "@types/react": "^16.0.38",
     "@types/react-dom": "^16.0.4",

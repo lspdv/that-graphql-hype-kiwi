@@ -74,7 +74,7 @@ const FlightDuration = ({ flight }) => {
 const Description = ({ airline, departure, arrival}) => {
   return (
       <div className="flights-card-flex flights-card-description">
-        <img src={airline.logoUrl} title={airline.name} />
+        <img  className="flights-card-description-img" src={airline.logoUrl} title={airline.name} />
       <div>
       <div className="flights-card-description">
         {departure.airport.name}
