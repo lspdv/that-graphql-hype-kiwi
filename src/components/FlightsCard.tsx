@@ -73,17 +73,17 @@ const FlightDuration = ({ flight }) => {
 
 const Description = ({ airline, departure, arrival}) => {
   return (
-      <div className="flights-card-flex flights-card-description">
-        <img  className="flights-card-description-img" src={airline.logoUrl} title={airline.name} />
+    <div className="flights-card-flex flights-card-description">
+      <img  className="flights-card-description-img" src={airline.logoUrl} title={airline.name} />
       <div>
-      <div className="flights-card-description">
-        {departure.airport.name}
+        <div className="flights-card-description">
+          {departure.airport.name}
+        </div>
+        <div className="flights-card-description">
+          {arrival.airport.name}
+        </div>
       </div>
-      <div className="flights-card-description">
-        {arrival.airport.name}
-      </div>
-      </div>
-      </div>
+    </div>
   );
 };
 
@@ -113,7 +113,7 @@ export const FlightsCard = (flight: FlightsProps) =>
           </div>
           <div className="flights-card-price">
             <h2>
-              { flight.node.price.amount } {''} { flight.node.price.currency }
+              { flight.node.price.currency } {''} { flight.node.price.amount }
             </h2>
           </div>
       </Card>

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import idx from 'idx';
 
 import AutoComplete from 'material-ui/AutoComplete';
 import DatePicker from 'material-ui/DatePicker';
@@ -11,11 +12,13 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './global.css';
 
 type Props = {
-  dataSource: any,
-  handleDate: any,
+  dataSource: {allLocations: LocationsShape},
+  handleDate: (e: any, date: Date) => void,
   handleOnChange: any,
   handleSubmit: any
 };
+
+type LocationsShape = {edges: any[]};
 
 const formFields = [
   { title: 'From*:', stateName: 'from' },
@@ -33,12 +36,10 @@ const muiThemeAutoComplete = getMuiTheme({
 });
 
 const Heading = ({dataSource}) => {
+  const edges = idx(dataSource, _ => _.allLocations.edges) || [];
   return(
-    dataSource && dataSource.allLocations.edges.length ?
-      <h2 className="that-ugly-green-title">No idea? We found {dataSource
-      && dataSource.allLocations
-      && dataSource.allLocations.edges
-      && dataSource.allLocations.edges.length} locations where you could travel to.</h2>
+    edges && edges.length ?
+      <h2 className="that-ugly-green-title">No idea? We found {edges.length} locations where you could travel to.</h2>
       : <h1>Where would you like to go?</h1>
   );
 };
@@ -63,10 +64,8 @@ export const Search = (props: Props) => {
 
   const { dataSource, handleDate, handleOnChange, handleSubmit } = props;
 
-  const dataSourceShortcut = dataSource
-    && dataSource.allLocations
-    && dataSource.allLocations.edges;
-  const datasourceMap = dataSourceShortcut && dataSource.allLocations.edges.map((location) => location.node.name);
+  const edges = idx(dataSource, _ => _.allLocations.edges) || [];
+  const datasourceMap = edges && edges.map((location) => location.node.name);
   return(
     <div className="container">
       <Heading dataSource={dataSource}/>
@@ -74,9 +73,9 @@ export const Search = (props: Props) => {
       <GitHubLink />
       <div className="input">
         <form>
-        { dataSourceShortcut
-        && formFields.map((field, idx) =>
-        <MuiThemeProvider muiTheme={muiThemeAutoComplete} key={idx}>
+        { edges
+        && formFields.map((field, key) =>
+        <MuiThemeProvider muiTheme={muiThemeAutoComplete} key={key}>
           <AutoComplete
             onUpdateInput={(value: string) => handleOnChange(`${field.stateName}`, value)}
             floatingLabelText={field.title}

@@ -8,9 +8,9 @@
     },
     "rules": {
       "interface-name": [true, "never-prefix"], // following the TypeScript official code style
-      "interface-over-type-literal": false, // this is because in TSX I want types over interfaces
+      "interface-over-type-literal": false,
       "member-access": [true, "no-public"],
-      "quotemark": [true, "single", "jsx-double"], // enforce single quotes
+      "quotemark": [true, "single", "jsx-double"],
       "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
       "max-line-length": [true, 150],
       "no-console": [ false ],
@@ -18,7 +18,9 @@
       "no-empty-interface": false,
       "object-literal-sort-keys": false,
       "indent": [true, "spaces", 2],
-      "only-arrow-functions": false
+      "only-arrow-functions": false,
+      "arrow-parens": false,
+      "ordered-imports": false
     },
     "rulesDirectory": []
 }

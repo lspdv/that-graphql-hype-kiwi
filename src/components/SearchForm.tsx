@@ -1,8 +1,9 @@
 import * as React from 'react';
+import idx from 'idx';
 
 import { getFlights, getLocations } from '../api/graphql';
+
 import { FlightsCard } from './FlightsCard';
-// import { ProgressBar } from './ProgressBar';
 import { Search } from './Search';
 
 import './global.css';
@@ -11,15 +12,13 @@ import { Spinner } from './Spinner';
 type State = {
   loading: boolean,
   dataSource: any,
-  data: {allFlights?: LocationsShape},
+  data: any,
   newFormValues: {
     from: string,
     to: string,
-    date: string
+    date: Date | string
   };
 };
-
-type LocationsShape = {edges: any[]};
 
 export class SearchForm extends React.Component<{}, State> {
   constructor(props: {}) {
@@ -43,10 +42,6 @@ export class SearchForm extends React.Component<{}, State> {
         date: ''
       }
     };
-
-    this.handleOnChange = this.handleOnChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleDate = this.handleDate.bind(this);
   }
 
   componentDidMount() {
@@ -55,7 +50,7 @@ export class SearchForm extends React.Component<{}, State> {
       });
     }
 
-  handleSubmit() {
+  handleSubmit = () => {
     const { from, to, date } = this.state.newFormValues;
     this.setState({ loading: true });
     getFlights(from, to, date).then((result) => {
@@ -64,23 +59,24 @@ export class SearchForm extends React.Component<{}, State> {
     );
   }
 
-handleOnChange(name: string, value: string) {
-    const values = this.state.newFormValues;
-    values[name] = value;
+  handleOnChange = (name: string, value: string) => {
+      const values = this.state.newFormValues;
+      values[name] = value;
 
-    this.setState({
-      newFormValues: values
-    });
-  }
+      this.setState({
+        newFormValues: values
+      });
+    }
 
-  handleDate(event: any, date: any) {
+  handleDate = (event: any, date: Date) => {
     const values = this.state.newFormValues;
     values.date = date;
     this.setState({ newFormValues: values});
   }
 
-render() {
+  render() {
     const { dataSource, data, loading } = this.state;
+    const edges = idx(data, _ => _.allFlights.edges) || [];
     return (
       <div>
         <Search
@@ -90,9 +86,7 @@ render() {
           handleSubmit={this.handleSubmit}
         />
         {loading && <Spinner />}
-        {data && data.allFlights
-          && data.allFlights.edges &&
-          data.allFlights.edges.map((flight, idx) => <FlightsCard {...flight} key={idx} />)}
+        {edges && edges.map((flight, key) => <FlightsCard {...flight} key={key} />)}
       </div>
     );
   }
