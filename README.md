@@ -1,3 +1,5 @@
+#### DEMO [click this link to see deployed app](https://lspdv.github.io/that-graphql-hype-kiwi)
+
 This project was bootstrapped with Create React App, React and Typescript and Material UI.
 
 This is experimental repo to try GraphQL and maybe by that fly to js-weekend by Kiwi.com
