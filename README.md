@@ -2,7 +2,7 @@ This project was bootstrapped with Create React App, React and Typescript and Ma
 
 This is experimental repo to try GraphQL and maybe by that fly to js-weekend by Kiwi.com
 
-If you like this, don't forget to Star this repo. It will make me feel good.
+Project is still missing form validation and proper messaging to user in case of errors (and after issues with data fetching).
 
 In the project directory, you can run:
 
