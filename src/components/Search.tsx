@@ -13,6 +13,7 @@ import './global.css';
 
 type Props = {
   dataSource: {allLocations: LocationsShape},
+  error: boolean,
   handleDate: (e: any, date: Date) => void,
   handleOnChange: any,
   handleSubmit: any
@@ -21,8 +22,8 @@ type Props = {
 type LocationsShape = {edges: any[]};
 
 const formFields = [
-  { title: 'From*:', stateName: 'from' },
-  { title: 'To*:', stateName: 'to'}
+  { title: 'From:', stateName: 'from' },
+  { title: 'To:', stateName: 'to'}
 ];
 
 const muiThemeAutoComplete = getMuiTheme({
@@ -39,22 +40,15 @@ const Heading = ({dataSource}) => {
   const edges = idx(dataSource, _ => _.allLocations.edges) || [];
   return(
     edges && edges.length ?
-      <h2 className="that-ugly-green-title">No idea? We found {edges.length} locations where you could travel to.</h2>
+      <h2 className="green-heading">No idea? We found {edges.length} locations where you could travel to.</h2>
       : <h1>Where would you like to go?</h1>
-  );
-};
-
-const SorryProste = () => {
-  return(
-    <p>* All fields in search are required, otherwise you will get just very ugly never ending spinning spinner.
-      #sorryProste time is money</p>
   );
 };
 
 const GitHubLink = () => {
   return (
   <p>
-  **Curious about the source code? Close your eyes and click {''}
+  Curious about the source code? Close your eyes and click {''}
   <a href="https://github.com/lspdv/that-graphql-hype-kiwi" target="_blank" rel="noopener noreferrer"> this link</a>.
   </p>
   );
@@ -62,14 +56,14 @@ const GitHubLink = () => {
 
 export const Search = (props: Props) => {
 
-  const { dataSource, handleDate, handleOnChange, handleSubmit } = props;
+  const { dataSource, error, handleDate, handleOnChange, handleSubmit } = props;
 
   const edges = idx(dataSource, _ => _.allLocations.edges) || [];
   const datasourceMap = edges && edges.map((location) => location.node.name);
+  const errorText = error && 'Please fill all fields.';
   return(
     <div className="container">
       <Heading dataSource={dataSource}/>
-      <SorryProste />
       <GitHubLink />
       <div className="input">
         <form>
@@ -83,14 +77,17 @@ export const Search = (props: Props) => {
             dataSource= {datasourceMap}
             maxSearchResults={10}
             name={field.stateName}
+            errorText={errorText}
           />
           </MuiThemeProvider>
           )
         }
           <DatePicker
             onChange={handleDate}
-            hintText="Choose date*"
+            hintText="Choose departure date"
             mode="landscape"
+            errorText={errorText}
+            autoOk
           />
         </form>
         <div className="search-button">

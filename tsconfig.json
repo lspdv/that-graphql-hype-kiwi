@@ -2,8 +2,8 @@
   "compilerOptions": {
     "outDir": "build/dist",
     "module": "esnext",
-    "target": "es5",
-    "lib": ["es6", "dom", "esnext.asynciterable"],
+    "target": "es6",
+    "lib": ["es7", "es2017.object", "dom", "esnext.asynciterable"],
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
