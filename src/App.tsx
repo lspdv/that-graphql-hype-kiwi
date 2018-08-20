@@ -4,6 +4,7 @@ import { darkBlack, darkWhite, fullBlack, tealA700 } from 'material-ui/styles/co
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { SearchForm } from './components/SearchForm';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 const muiTheme = getMuiTheme({
   fontFamily: 'Roboto, sans-serif',
@@ -31,7 +32,9 @@ render() {
   return (
         <div>
           <MuiThemeProvider muiTheme={muiTheme}>
-            <SearchForm />
+            <ErrorBoundary>
+              <SearchForm />
+            </ErrorBoundary>
           </MuiThemeProvider>
         </div>
       );

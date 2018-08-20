@@ -12,6 +12,12 @@ p {
   margin-top: 4em;
 }
 
+.error-boundary {
+  text-align: center;
+  margin-top: 20em;
+  font-size: 12px;
+}
+
 .input {
   width: 90%;
   flex-direction: row;

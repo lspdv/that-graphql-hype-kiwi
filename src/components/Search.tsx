@@ -22,8 +22,8 @@ type Props = {
 type LocationsShape = {edges: any[]};
 
 const formFields = [
-  { title: 'From:', stateName: 'from' },
-  { title: 'To:', stateName: 'to'}
+  { title: 'From (required)', stateName: 'from' },
+  { title: 'To (required)', stateName: 'to'}
 ];
 
 const muiThemeAutoComplete = getMuiTheme({
@@ -60,36 +60,38 @@ export const Search = (props: Props) => {
 
   const edges = idx(dataSource, _ => _.allLocations.edges) || [];
   const datasourceMap = edges && edges.map((location) => location.node.name);
-  const errorText = error && 'Please fill all fields.';
+  const errorText = error && 'All fields are required';
   return(
     <div className="container">
       <Heading dataSource={dataSource}/>
       <GitHubLink />
       <div className="input">
         <form>
-        { edges
-        && formFields.map((field, key) =>
-        <MuiThemeProvider muiTheme={muiThemeAutoComplete} key={key}>
-          <AutoComplete
-            onUpdateInput={(value: string) => handleOnChange(`${field.stateName}`, value)}
-            floatingLabelText={field.title}
-            filter={AutoComplete.fuzzyFilter}
-            dataSource= {datasourceMap}
-            maxSearchResults={10}
-            name={field.stateName}
-            errorText={errorText}
-          />
-          </MuiThemeProvider>
-          )
-        }
+          { edges
+          && formFields.map((field, key) =>
+          <MuiThemeProvider muiTheme={muiThemeAutoComplete} key={key}>
+            <AutoComplete
+              onUpdateInput={(value: string) => handleOnChange(`${field.stateName}`, value)}
+              floatingLabelText={field.title}
+              filter={AutoComplete.fuzzyFilter}
+              dataSource= {datasourceMap}
+              maxSearchResults={10}
+              name={field.stateName}
+              errorText={errorText}
+              hintText="Start typing"
+            />
+            </MuiThemeProvider>
+            )
+          }
           <DatePicker
             onChange={handleDate}
-            hintText="Choose departure date"
+            hintText="Choose departure date (required)"
             mode="landscape"
             errorText={errorText}
             autoOk
           />
         </form>
+        <p>Hint: Did you fill all required fields?</p>
         <div className="search-button">
           <RaisedButton
             onClick={handleSubmit}
